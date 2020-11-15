@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>宗教答题直接满分的方法</title>
+      <link href="/posts/contest-answer/"/>
+      <url>/posts/contest-answer/</url>
+      
+        <content type="html"><![CDATA[<h3 id="电脑端"><a href="#电脑端" class="headerlink" title="电脑端"></a>电脑端</h3><p>打开答题页面，然后按F12打开开发者工具，点击上方的Console(或控制台)，粘贴下面的代码，回车。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> topicid=topicJsonArray[<span class="number">0</span>][<span class="string">&quot;TOPICID&quot;</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;topicJsonArray.length;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        topicJsonArray[i][<span class="string">&quot;TOPICID&quot;</span>]=topicid;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>注意会返回一串数字，如果没有就是复制的有问题。<br>&ensp;<br>然后在题库里搜索第一题的答案，把第一题的正确选项选上，直接点提交即可。</p><h3 id="手机端"><a href="#手机端" class="headerlink" title="手机端"></a>手机端</h3><p>下载并安装<a href="https://www.coolapk.com/apk/mark.via">Via浏览器</a><br>用这个浏览器打开答题页面，然后点开上方的标题栏，输入下面的代码并回车。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascript:<span class="keyword">var</span> kzt=<span class="built_in">document</span>.createElement(<span class="string">&quot;script&quot;</span>); kzt.src=<span class="string">&quot;//cdnjs.cloudflare.com/ajax/libs/vConsole/3.3.4/vconsole.min.js&quot;</span>; kzt.onload=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">new</span> VConsole();&#125;; <span class="built_in">document</span>.body.appendChild(kzt);</span><br></pre></td></tr></table></figure><p>然后界面会多出来一个vConsole按钮，点开，在Console栏下面的Command输入框内输入下面的代码并回车。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> topicid=topicJsonArray[<span class="number">0</span>][<span class="string">&quot;TOPICID&quot;</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;topicJsonArray.length;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        topicJsonArray[i][<span class="string">&quot;TOPICID&quot;</span>]=topicid;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>然后点一下上面的部分返回答题界面，同样是把第一题答对提交即可。</p><h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>输完代码回车后不要刷新页面，否则需要重新输一次。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 编程 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Easy163添加倒带支持和通知栏快捷设置</title>
       <link href="/posts/modify-easy163/"/>
       <url>/posts/modify-easy163/</url>
