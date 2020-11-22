@@ -186,7 +186,6 @@ div.timenode:last-child:after {
 div.timenode .meta {
   position: relative;
   color: var(--tab-botton-color);
-  font-size: 0.375rem;
   line-height: 32px;
   height: 32px;
   left: 27px;
