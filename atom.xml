@@ -6,7 +6,7 @@
   <link href="https://blog.revincx.icu/atom.xml" rel="self"/>
   
   <link href="https://blog.revincx.icu/"/>
-  <updated>2020-12-16T05:02:21.958Z</updated>
+  <updated>2021-01-18T10:10:09.990Z</updated>
   <id>https://blog.revincx.icu/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一次腾讯云函数的适配开发</title>
+    <link href="https://blog.revincx.icu/posts/tencent-scf-dev/"/>
+    <id>https://blog.revincx.icu/posts/tencent-scf-dev/</id>
+    <published>2021-01-18T09:34:08.000Z</published>
+    <updated>2021-01-18T10:10:09.990Z</updated>
+    
+    <content type="html"><![CDATA[<p>好长时间没有更新博客了，正好前天做了一个自动打卡脚本在腾讯云函数上的适配，中间遇到了一些问题，于是写篇文章来记录一下。</p><h3 id="获取用户信息"><a href="#获取用户信息" class="headerlink" title="获取用户信息"></a>获取用户信息</h3><p>之前的脚本是在Github Actions上定时运行的，获取用户信息的方案是从项目的Secrets中读取。中间其实还有写入到命令行然后再从命令行中读取字符等过程，目的只是保护用户信息不泄露。</p><p>命令行：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 main.py &lt;&lt;EOF</span><br><span class="line"><span class="meta">$</span><span class="bash">&#123;&#123;secrets.USERS&#125;&#125;</span></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure><p>读取：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:  </span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        users = input()</span><br><span class="line">        info = users.split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">        phone.append(info[<span class="number">0</span>])</span><br><span class="line">        password.append(info[<span class="number">1</span>])</span><br><span class="line">        sckey.append(info[<span class="number">2</span>])</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure><p>对于腾讯云函数，我采用的方法是将SCKEY和用户的信息都放入环境变量，这样别人在使用脚本的时候就只需要添加环境变量即可，不用修改代码。</p><p>修改之后的读取操作：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:  </span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        user = os.environ.get(<span class="string">&#x27;user&#x27;</span> + str(i))</span><br><span class="line">        <span class="keyword">if</span> user <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        phone.append(user.split(<span class="string">&#x27;,&#x27;</span>)[<span class="number">0</span>])</span><br><span class="line">        password.append(user.split(<span class="string">&#x27;,&#x27;</span>)[<span class="number">1</span>])</span><br><span class="line">        i+=<span class="number">1</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure><h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><p>这是最麻烦的地方，腾讯云函数的运行环境并不是啥依赖都有，查询文档后得知没有的依赖需要和代码包一同打包上传。</p><blockquote><ol><li>在 requirements.txt 中配置依赖信息。</li><li>通过 pip install -r requirements.txt -t . 命令安装依赖包。</li><li>上传代码库时请将依赖库一同打包上传。</li></ol></blockquote><p>于是尝试把pycrytodome的Cryto模块打包直接上传，结果并不能运行。</p><p>查询文档:</p><blockquote><p>函数运行的系统是 CentOS 7，您需要在相同环境下进行安装。若环境不一致，则可能导致上传后运行时出现找不到依赖的错误。您可参考<a href="https://cloud.tencent.com/document/product/583/50826">云函数容器镜像</a>进行依赖安装。</p></blockquote><p>看了一下关于容器镜像的文档，好家伙还要用到Docker，但我之前连Docker是干啥的都不知道。。</p><p>没办法，硬着头皮下了一个Docker Desktop，升级了下wsl子系统环境（虽然并没有用到wsl2），让后用命令<code>docker pull ccr.ccs.tencentyun.com/scf-repo/runtime-python3:latest</code>拉取容器镜像，把项目文件夹挂载到镜像容器内，然后使用下面的命令安装依赖：</p><p><code>pip3 install pipreqs</code><br><code>pipreqs ./</code><br><code>pip install -r requirements.txt -t ./</code></p><p>其中pipreqs把urllib和requests这两个依赖也放进了requirements.txt，但腾讯云函数的运行环境已经有这两个依赖了，手动去掉即可。</p><p>安装完依赖后打包上传，部署并测试，终于能够正常运行了。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;好长时间没有更新博客了，正好前天做了一个自动打卡脚本在腾讯云函数上的适配，中间遇到了一些问题，于是写篇文章来记录一下。&lt;/p&gt;
+&lt;h3 id=&quot;获取用户信息&quot;&gt;&lt;a href=&quot;#获取用户信息&quot; class=&quot;headerlink&quot; title=&quot;获取用户信息&quot;&gt;&lt;/a&gt;获</summary>
+      
+    
+    
+    
+    
+    <category term="编程" scheme="https://blog.revincx.icu/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>学校教务系统的漏洞分析</title>
