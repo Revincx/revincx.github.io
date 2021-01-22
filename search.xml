@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>SolidWorks 2020 破解教程</title>
+      <link href="/posts/solidworks-crack/"/>
+      <url>/posts/solidworks-crack/</url>
+      
+        <content type="html"><![CDATA[<p>话不多说，直接开始。下载并解压缩后我们会得到下面的文件(夹)</p><ul><li>SolidWorks.2020.SP3.0.Full.Premium.DVD.iso (主安装文件)</li><li>SW2020 SP2 fixed SPRs.7z</li><li>_SolidSQUAD_ (破解补丁)</li></ul><p>在_SolidSQUAD_目录下有一个英文版的readme.txt，我们就依照这里的步骤进行安装。</p><blockquote><p>If you already have SW2020 cracked by SSQ installed you can just update existing SW2020 to this one. No additional crack is needed So you can skip steps 1-5</p></blockquote><p>如果你已经安装过了被SSQ破解过的2020版，你可以仅仅升级到此版本并跳过1-5步。</p><h2 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h2><h3 id="断网并准备-NET环境"><a href="#断网并准备-NET环境" class="headerlink" title="断网并准备.NET环境"></a>断网并准备.NET环境</h3><blockquote><p>Before installation, block the outgoing Internet access by means of Windows Firewall or cord plug. Check .NET Framework 3.5 and 4.0 are installed. If .NET Framework 3.5 (including 2.0) is not installed, go to “Control Panel” -&gt; “Programs and Features” -&gt; “Turn Windows features on or off” -&gt; select “.NET Framework 3.5 (including 2.0)”</p></blockquote><p>大概意思就是安装前要断网，然后检查一下有没有安装.NET框架，如果没安装这个框架，去控制面板（从任务栏的搜索框里可以找到）-&gt; 程序和功能 -&gt; 启用或关闭Windows功能里面，把<code>.NET Framework 3.5（.NET 2.0 和 3.0）</code>这一项前面的复选框选中即可（不需要展开）。</p><p><img src="/images/solidworks-crack/dotnet.png"></p><h3 id="添加注册表"><a href="#添加注册表" class="headerlink" title="添加注册表"></a>添加注册表</h3><p>解压_SolidSQUAD_目录下的<em>SolidSQUAD</em>.7z,双击<code>sw2020_network_serials_licensing.reg</code>并点击确定，将该项添加到注册表。</p><h3 id="准备本地Server环境"><a href="#准备本地Server环境" class="headerlink" title="准备本地Server环境"></a>准备本地Server环境</h3><p>把SolidWorks_Flexnet_Server这个文件夹复制到C盘（其实复制到其他地方也行，只要以后不删掉），右键选择文件夹中的<code>server_install.bat</code>，点击<code>以管理员身份运行</code>。</p><p>出现<code>SolidWorks Flexnet Server 服务已经启动成功</code>即可关闭。</p><h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>解压<code>SolidWorks.2020.SP3.0.Full.Premium.DVD.iso</code>，打开setup.exe。(其实win10以上也可以直接双击点开，这样会加载成虚拟光驱)</p><p><img src="/images/solidworks-crack/install-1.png"></p><p>选择 <code>在此计算机上安装</code>，下一步，下一步。</p><p>当碰到下面的弹窗时，点击<code>取消</code>。</p><p><img src="/images/solidworks-crack/install-2.png"></p><p>自行更改安装位置。勾选<code>我接受 SOLIDWORKS 条款</code></p><p><img src="/images/solidworks-crack/install-3.png"></p><p>出现如下窗口，确保端口@服务器填的是<code>25734@localhost</code></p><p><img src="/images/solidworks-crack/install-4.png"></p><p>安装过程比较耗时间，建议先去吃顿饭或者开一局游戏。</p><p><img src="/images/solidworks-crack/install-5.png"></p><p>安装完成。</p><p><img src="/images/solidworks-crack/install-6.png"></p><h2 id="安装后"><a href="#安装后" class="headerlink" title="安装后"></a>安装后</h2><p>还没完呢，把_SolidSQUAD_\Program Files\SOLIDWORKS Corp下的所有文件，复制到你的安装目录。比如你安装在了D盘SolidWorks目录下，那么就把这些文件全部复制到该目录。</p><p><img src="/images/solidworks-crack/copy-files.png"></p><p>双击刚才_SolidSQUAD_目录下的<code>SolidSQUADLoaderEnabler.reg</code>，点击确定。</p><p>重启你的电脑。</p><p>打开SOLIDWORKS 2020，点击右上角的小问号，点击SolidNetWork License Manager，在弹出的窗口中点击许可顺序选项卡，然后把所有以Premium结尾的项目移动到最上方。点击应用，确定。</p><p><img src="/images/solidworks-crack/order.png"></p><p>破解完成，已经可以联网了。</p><p><img src="/images/solidworks-crack/products.png"></p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>大概分析了一下破解原理，相当于在本地搭建了一个Solidworks许可证的服务器，然后控制SolidWorks从本地的的许可服务器获取许可证。原理很巧妙，但也有不足的一点，本地的运行的服务需要一直挂在后台，虽然占用的内存不多，但确实有点鸡肋。</p><p><img src="/images/solidworks-crack/taskmgr.png"></p><p><img src="/images/solidworks-crack/taskmgr2.png"></p><p>话说回来，SolidWroks足足占用了我将近20G的空间，而且我甚至感觉开机都变慢了，我在考虑要不还是卸了算了…</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 教程 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>一次腾讯云函数的适配开发</title>
       <link href="/posts/tencent-scf-dev/"/>
       <url>/posts/tencent-scf-dev/</url>
@@ -95,6 +114,8 @@
         <tags>
             
             <tag> 编程 </tag>
+            
+            <tag> 教程 </tag>
             
         </tags>
       
