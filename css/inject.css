@@ -268,3 +268,10 @@ div.timenode:hover .meta:after {
 	background: #ff5722;
 	transform: scale(1);
 }
+
+
+/* 删除线颜色 */
+
+del{
+	color: gray;
+}

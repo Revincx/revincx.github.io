@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>小程序开发初探及沉浸式界面设计 | Revincx的小破站</title><meta name="keywords" content="编程,网页设计"><meta name="author" content="Revincx"><meta name="copyright" content="Revincx"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前一阵子在学习微信小程序开发，于是写一篇文章来记录一下~ （博客文章数喜加一 开发工具值得一提的是微信专门为小程序和网页开发搞了一个IDE，名字毫无特色，就叫微信开发者工具，界面设计的倒还不算反人类，打开工具栏有一个叫调试(调戏)微信开发者工具的选项，才知道这个IDE差不多就是一个加了壳的网页，不过这样做确实方便调试 WMXL语法虽然也算是HTML的变种，但是相对HTML修改了很多部分，比如HTM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小程序开发初探及沉浸式界面设计">
+<meta property="og:url" content="https://blog.revincx.icu/posts/wechat-app-dev/index.html">
+<meta property="og:site_name" content="Revincx的小破站">
+<meta property="og:description" content="前一阵子在学习微信小程序开发，于是写一篇文章来记录一下~ （博客文章数喜加一 开发工具值得一提的是微信专门为小程序和网页开发搞了一个IDE，名字毫无特色，就叫微信开发者工具，界面设计的倒还不算反人类，打开工具栏有一个叫调试(调戏)微信开发者工具的选项，才知道这个IDE差不多就是一个加了壳的网页，不过这样做确实方便调试 WMXL语法虽然也算是HTML的变种，但是相对HTML修改了很多部分，比如HTM">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva2.sinaimg.cn/large/9bd9b167gy1g2qk7kdwdcj213y0u04fz.jpg">
+<meta property="article:published_time" content="2021-02-09T12:06:01.000Z">
+<meta property="article:modified_time" content="2021-02-09T14:17:03.496Z">
+<meta property="article:author" content="Revincx">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="网页设计">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva2.sinaimg.cn/large/9bd9b167gy1g2qk7kdwdcj213y0u04fz.jpg"><link rel="shortcut icon" href="/images/favico.png"><link rel="canonical" href="https://blog.revincx.icu/posts/wechat-app-dev/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-09 22:17:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@latest/butterfly/css/macblack.css"><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Revincx的小破站" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="http://q1.qlogo.cn/g?b=qq&amp;nk=2635278791&amp;s=640" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tva2.sinaimg.cn/large/9bd9b167gy1g2qk7kdwdcj213y0u04fz.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Revincx的小破站</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">小程序开发初探及沉浸式界面设计</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-09T12:06:01.000Z" title="发表于 2021-02-09 20:06:01">2021-02-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-02-09T14:17:03.496Z" title="更新于 2021-02-09 22:17:03">2021-02-09</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>前一阵子在学习微信小程序开发，于是写一篇文章来记录一下~ （博客文章数喜加一</p>
+<h2 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h2><p>值得一提的是微信专门为小程序和网页开发搞了一个IDE，名字毫无特色，就叫<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/devtools.html">微信开发者工具</a>，界面设计的倒还不算反人类，打开工具栏有一个叫调试<del>(调戏)</del>微信开发者工具的选项，才知道这个IDE差不多就是一个加了壳的网页，不过这样做确实方便调试</p>
+<h2 id="WMXL语法"><a href="#WMXL语法" class="headerlink" title="WMXL语法"></a>WMXL语法</h2><p>虽然也算是HTML的变种，但是相对HTML修改了很多部分，比如HTML里的div相当于WXML里的view，img相当于image等等，另外大概超过一半的html元素在wxml里都被阉割，取而代之的是微信自己设计的开箱即用的组件，如scroll-view，swiper等，说实话，开发小程序的难度确实要比网页开发简单多了</p>
+<h2 id="MVVM框架"><a href="#MVVM框架" class="headerlink" title="MVVM框架"></a>MVVM框架</h2><p>微信小程序的模式和目前的主流前端框架都使用了MVVM开发模式，由于之前也没有接触过这个领域，我去查了一下相关的资料。</p>
+<blockquote>
+<p>MVVM是Model-View-ViewModel的简写。它本质上就是MVC 的改进版。MVVM 就是将其中的View 的状态和行为抽象化，让我们将视图 UI 和业务逻辑分开。</p>
+</blockquote>
+<p>在WXML中，使用Mustache语法绑定动态数据，然后在page的js中注册相应的data，如此一来，只要在js中使用<code>this.setData</code>方法操作data的值，页面中绑定的数据就会动态刷新。另外，WXML也支持简单的双向数据绑定。</p>
+<p>一开始使用这个模式来编程的时候确实不太习惯，不过后来适应了之后也觉得这种模式确实有优点。再到后来学习了<a target="_blank" rel="noopener" href="https://cn.vuejs.org/">Vue.js</a>之后这种感觉更是明显。</p>
+<h2 id="页面的Js逻辑"><a href="#页面的Js逻辑" class="headerlink" title="页面的Js逻辑"></a>页面的Js逻辑</h2><p>小程序里的Page与安卓里的Activity一样有生命周期。在page加载时，会先调用Page.onLoad()方法作为入口，这一点类似于Activity.onCreate()方法。此外，小程序的生命生命周期中也有着onShow，onReady，onHide，onUnload等回调方法。</p>
+<h2 id="沉浸页面开发"><a href="#沉浸页面开发" class="headerlink" title="沉浸页面开发"></a>沉浸页面开发</h2><p>我个人设计移动端页面的时候喜欢做全沉浸式界面，认为这样的界面简洁，优雅。下面是在为小程序做沉浸式界面时碰到的一些问题和解决方案。</p>
+<h3 id="沉浸式状态栏"><a href="#沉浸式状态栏" class="headerlink" title="沉浸式状态栏"></a>沉浸式状态栏</h3><p>由于我的页面是暗色的，首先要把状态栏调成亮色，然后把navigationBar调成自定义布局。<br>在单page目录下的json文件里添加：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;navigationStyle&quot;</span>: <span class="string">&quot;custom&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;navigationBarTextStyle&quot;</span>: <span class="string">&quot;white&quot;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="状态栏导航栏适配"><a href="#状态栏导航栏适配" class="headerlink" title="状态栏导航栏适配"></a>状态栏导航栏适配</h3><p>因为把导航栏改成了自定义，所以我们就得为状态栏和导航栏做单独适配。</p>
+<p>首先是获取状态栏的高度，然后再在根布局的上方留一个padding，微信为我们提供了获取状态栏高度的接口：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> statusHeight = wx.getSystemInfoSync().statusBarHeight</span><br></pre></td></tr></table></figure>
+
+<p>然后就是导航栏了，我们需要自己做一个顶端的导航栏，但是微信并没有提供导航栏高度相关的接口。为了实现效果，最终查到一种方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> menuBtn = wx.getMenuButtonBoundingClientRect()</span><br><span class="line"><span class="keyword">var</span> navHeight = (menuBtn.top - statusHeight) * <span class="number">2</span> + menuBtn.height</span><br></pre></td></tr></table></figure>
+
+<p>微信小程序的页面右上方有一个小的菜单按钮，这里获取了按钮实例后，获取了它到屏幕顶端的距离和自身的高度，然后用距离减去状态栏高度再乘以2，最后加上自身的高度，得到的就是标题栏的高度。</p>
+<p>实在是妙啊~</p>
+<h3 id="下拉刷新适配"><a href="#下拉刷新适配" class="headerlink" title="下拉刷新适配"></a>下拉刷新适配</h3><p>由于自定义了顶栏，如果用原先Page上自带的onPullDownRefresh的话效果会十分丑陋，而且会把自定义的标题栏也拉下去。</p>
+<p>通过查阅文档得知，scroll-view也有refresher，在WXML里对scroll-view做以下修改：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">scroll-view</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">class</span>=<span class="string">&quot;scroll-container&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">scroll-y</span>=<span class="string">&quot;true&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">refresher-enabled</span>=<span class="string">&quot;true&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">refresher-default-style</span>=<span class="string">&quot;white&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">refresher-threshold</span>=<span class="string">&quot;40&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">refresher-triggered</span>=<span class="string">&quot;&#123;&#123;refreshTriggered&#125;&#125;&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">bindrefresherrefresh</span>=<span class="string">&quot;refresh&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">scroll-view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>bindrefresherrefresh</code>用来绑定刷新动作对应的方法，而<code>refresher-triggered</code>属性用来绑定当前刷新的状态，正在刷新则为true。</p>
+<p>本来还可以自定义下拉刷新控件的样式，但由于默认效果已经足够，而自定义比较麻烦就放弃了这个想法。</p>
+<h3 id="底部导航栏"><a href="#底部导航栏" class="headerlink" title="底部导航栏"></a>底部导航栏</h3><p>因为项目要求开发一个底部导航栏，而用微信提供的方法实现则与沉浸式界面十分的不搭，这里我有造了一波轮子，手动弄了一个导航栏。</p>
+<p>底部导航栏的WXML：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;nav-bar&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">bindtap</span>=<span class="string">&quot;switchTab&quot;</span> <span class="attr">wx:key</span>=<span class="string">&quot;index&quot;</span> <span class="attr">wx:for</span>=<span class="string">&quot;&#123;&#123;navbarItem&#125;&#125;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;nav-bar-item-container&quot;</span> <span class="attr">bindtap</span>=<span class="string">&quot;switchTab&#123;&#123;item.index&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;nav-bar-item&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;material-icons&quot;</span> <span class="attr">style</span>=<span class="string">&quot;color:&#123;&#123;item.color&#125;&#125;&quot;</span>&gt;</span>&#123;&#123;item.icon&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">text</span> <span class="attr">style</span>=<span class="string">&quot;font-size: 12px;color:&#123;&#123;item.color&#125;&#125;&quot;</span>&gt;</span>&#123;&#123;item.text&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>WXSS里用的是flex弹性布局，因为代码比较多就不贴出来了，下面主要讲如何实现切换。</p>
+<p>我们可以在布局里弄两个container，分别加上wx:if的判断，在js里加一个currentPage的data，导航栏绑定的tap事件是<code>switchTab&#123;&#123;item.index&#125;&#125;</code>然后定义不同的方法，如switchTab1,switchTab2等，来修改currentPage的值。下面是switchTab方法示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">switchTab1: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> newNavBarItem = <span class="built_in">this</span>.data.navbarItem</span><br><span class="line">  <span class="keyword">var</span> _this = <span class="built_in">this</span></span><br><span class="line">  <span class="comment">// 更改图标颜色</span></span><br><span class="line">  newNavBarItem[<span class="number">1</span>].color = <span class="string">&#x27;rgba(255,255,255,0.5)&#x27;</span></span><br><span class="line">  newNavBarItem[<span class="number">0</span>].color = <span class="string">&#x27;white&#x27;</span></span><br><span class="line">  <span class="comment">// 加载页面切换的淡入动画</span></span><br><span class="line">  <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">    navbarItem: newNavBarItem,</span><br><span class="line">    animation2: <span class="string">&#x27;fade-out&#x27;</span>,</span><br><span class="line">    animation1: <span class="string">&#x27;fade-in&#x27;</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// 动画加载完毕</span></span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    _this.setData(&#123;</span><br><span class="line">      currentPage: <span class="number">1</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, <span class="number">200</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就优雅<del>（个屁）</del>的完成了导航栏的适配，甚至还加入了淡入的动画效果（这个上文没有提，改变class就行了）</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>因为小程序开发的学习只是临时课程，这里我没有对小程序的API进行深层次的研究，所以个别做法可能会与正规的开发规范有一定出入，还请多多指教。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Revincx</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.revincx.icu/posts/wechat-app-dev/">https://blog.revincx.icu/posts/wechat-app-dev/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.revincx.icu" target="_blank">Revincx的小破站</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BC%96%E7%A8%8B/">编程</a><a class="post-meta__tags" href="/tags/%E7%BD%91%E9%A1%B5%E8%AE%BE%E8%AE%A1/">网页设计</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/solidworks-crack/"><img class="next-cover" src="https://tva3.sinaimg.cn/large/9bd9b167gy1g4lhomn16qj21hc0xcx0e.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">SolidWorks 2020 破解教程</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="http://q1.qlogo.cn/g?b=qq&amp;nk=2635278791&amp;s=640" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Revincx</div><div class="author-info__description">别问，问就是在摸鱼🐟</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Revincx" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:revincx@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-number">1.</span> <span class="toc-text">开发工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WMXL%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">WMXL语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVVM%E6%A1%86%E6%9E%B6"><span class="toc-number">3.</span> <span class="toc-text">MVVM框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E7%9A%84Js%E9%80%BB%E8%BE%91"><span class="toc-number">4.</span> <span class="toc-text">页面的Js逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%89%E6%B5%B8%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91"><span class="toc-number">5.</span> <span class="toc-text">沉浸页面开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B2%89%E6%B5%B8%E5%BC%8F%E7%8A%B6%E6%80%81%E6%A0%8F"><span class="toc-number">5.1.</span> <span class="toc-text">沉浸式状态栏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E6%A0%8F%E5%AF%BC%E8%88%AA%E6%A0%8F%E9%80%82%E9%85%8D"><span class="toc-number">5.2.</span> <span class="toc-text">状态栏导航栏适配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E9%80%82%E9%85%8D"><span class="toc-number">5.3.</span> <span class="toc-text">下拉刷新适配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%95%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F"><span class="toc-number">5.4.</span> <span class="toc-text">底部导航栏</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">6.</span> <span class="toc-text">后记</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Revincx</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script src="/js/inject.js"></script><script async src="/live2d-widget/autoload.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
