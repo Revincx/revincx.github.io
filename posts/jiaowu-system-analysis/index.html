@@ -142,32 +142,32 @@
     })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@latest/butterfly/css/macblack.css"><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Revincx的小破站" type="application/atom+xml">
 </head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="http://q1.qlogo.cn/g?b=qq&amp;nk=2635278791&amp;s=640" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tva3.sinaimg.cn/large/0072Vf1pgy1foxkiv5gzwj31hc0u0ncg.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Revincx的小破站</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">学校教务系统的漏洞分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-12-16T03:05:45.000Z" title="发表于 2020-12-16 11:05:45">2020-12-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-16T05:02:21.958Z" title="更新于 2020-12-16 13:02:21">2020-12-16</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>本来是想着用Python写一个抢课的脚本，没想到在研究教务系统的网页时发现了我们教务系统漏洞还挺多。</p>
 <p>学校教务系统搭建在IIS上，这个方正教务系统用的是ASP .NET,系统版本还是2017年的，据我们学长说以前也被人搞过，但仍然很长一段时间都没有升级系统。</p>
-<p><img src="/images/jiaowu-system-analysis/footer.png" alt="教务系统底部"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/footer.png" alt="教务系统底部"></p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这里我已经提前知道了我们选课的那个页面对应xsxk.aspx，但教务系统首页现在的导航栏你活动报名一栏没有开放学生选课的入口，于是我们尝试把地址栏中的xs_main.aspx改为xsxk.aspx。一开始服务器返回了302，页面显示：<code>Object moved to here</code>，没事我们直接点进去，然后会有一个alert弹出，直接忽略就能进去了。</p>
-<p><img src="/images/jiaowu-system-analysis/alert.png"><br><img src="/images/jiaowu-system-analysis/xsxk.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/alert.png"><br><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/xsxk.png"></p>
 <p>点一下查看课表就可以把隐藏的按钮显示出来。</p>
-<p><img src="/images/jiaowu-system-analysis/xsxk2.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/xsxk2.png"></p>
 <p>点选修课程，然后会有一个窗口弹出，这里可能会被chrome拦截，点地址栏的允许弹出窗口就行了。</p>
-<p><img src="/images/jiaowu-system-analysis/window.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/window.png"></p>
 <p>随便选一个项目，然后点选定，这时主窗口的课程列表就会更新。</p>
-<p><img src="/images/jiaowu-system-analysis/lesson-list.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/lesson-list.png"></p>
 <p>随便点一个课程然后又会有一个弹出窗口，同时会有不允许选课的alert弹出。</p>
-<p><img src="/images/jiaowu-system-analysis/alert2.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/alert2.png"></p>
 <p>这时我们不要点确定，否则窗口就会被关闭。复制这个窗口地址栏的网址，新建一个标签页打开。弹出alert后就可以直接点确定，不出意外的话这个标签页应该不会被关闭。</p>
-<p><img src="/images/jiaowu-system-analysis/xsxjs.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/xsxjs.png"></p>
 <p>但是这个页面仍然不允许选课，没事，依照刚才的思路，一定是有东西被隐藏了。我们通过开发人员工具可以发现，关闭按钮前面还有两个button的样式都被设为了<code>DISPLAY:NONE</code>。</p>
-<p><img src="/images/jiaowu-system-analysis/devtools.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/devtools.png"></p>
 <p>把这两个button的DISPLAY属性都取消掉，关闭按钮前面就会出现两个空白的按钮。尝试点第一个按钮，就会弹出如下提示。</p>
-<p><img src="/images/jiaowu-system-analysis/xsxjs2.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/xsxjs2.png"></p>
 <p>同时我们想要的选课界面就出来了。</p>
-<p><img src="/images/jiaowu-system-analysis/xsxjs3.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/xsxjs3.png"></p>
 <p>选中单选框并选中不预定教材，然后点点选定按钮提交，就会用保存成功的提示。</p>
-<p><img src="/images/jiaowu-system-analysis/save-succeed.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/save-succeed.png"></p>
 <p>我们回到之前的页面查看我们的已选课程：</p>
-<p><img src="/images/jiaowu-system-analysis/choosed-lesson.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/choosed-lesson.png"></p>
 <p>已选课程里面已经有了我们刚才选的课。</p>
 <h3 id="更大胆的想法"><a href="#更大胆的想法" class="headerlink" title="更大胆的想法"></a>更大胆的想法</h3><p>教务系统网页提交信息时都会同时提交ViewState，虽然没有学过ASP，但通过查询资料，我觉得这个地方大有文章可做。</p>
-<p><img src="/images/jiaowu-system-analysis/devtools2.png"></p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="/images/jiaowu-system-analysis/devtools2.png"></p>
 <p>尝试进行base64解码，结果里面出现了明文，说明没有经过加密。</p>
 <p>资料：</p>
 <blockquote>
