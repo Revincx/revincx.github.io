@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>我的个人网盘搭建之路 | Revincx的小破站</title><meta name="keywords" content="云储存,网站"><meta name="author" content="Revincx"><meta name="copyright" content="Revincx"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前一段时间突然心血来潮，想学大佬搞一个个人网盘，正好有一个微软E5的订阅和A1的订阅，于是便开始着手研究网盘站的搭建。 下面我会介绍我尝试过的几个网盘搭建程序并进行对比供大家参考。 OneManager源码地址：OneManager-php Demo：OneManager Heroku Demo 这是一个PHP开发的OneDrive目录索引程序，也是我目前主要在用的一个。 OneManager同样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的个人网盘搭建之路">
+<meta property="og:url" content="https://blog.revincx.icu/posts/my-cloud-storages/index.html">
+<meta property="og:site_name" content="Revincx的小破站">
+<meta property="og:description" content="前一段时间突然心血来潮，想学大佬搞一个个人网盘，正好有一个微软E5的订阅和A1的订阅，于是便开始着手研究网盘站的搭建。 下面我会介绍我尝试过的几个网盘搭建程序并进行对比供大家参考。 OneManager源码地址：OneManager-php Demo：OneManager Heroku Demo 这是一个PHP开发的OneDrive目录索引程序，也是我目前主要在用的一个。 OneManager同样">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/9bd9b167gy1g2qkue4tjcj21hc0u01kx.jpg">
+<meta property="article:published_time" content="2021-02-23T10:14:10.000Z">
+<meta property="article:modified_time" content="2021-02-23T11:37:00.357Z">
+<meta property="article:author" content="Revincx">
+<meta property="article:tag" content="云储存">
+<meta property="article:tag" content="网站">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva3.sinaimg.cn/large/9bd9b167gy1g2qkue4tjcj21hc0u01kx.jpg"><link rel="shortcut icon" href="/images/favico.png"><link rel="canonical" href="https://blog.revincx.icu/posts/my-cloud-storages/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-23 19:37:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@latest/butterfly/css/macblack.css"><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Revincx的小破站" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="http://q1.qlogo.cn/g?b=qq&amp;nk=2635278791&amp;s=640" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/words/"><i class="fa-fw fas fa-feather-alt"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tva3.sinaimg.cn/large/9bd9b167gy1g2qkue4tjcj21hc0u01kx.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Revincx的小破站</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/words/"><i class="fa-fw fas fa-feather-alt"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">我的个人网盘搭建之路</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-23T10:14:10.000Z" title="发表于 2021-02-23 18:14:10">2021-02-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-02-23T11:37:00.357Z" title="更新于 2021-02-23 19:37:00">2021-02-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">934</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>前一段时间突然心血来潮，想学大佬搞一个个人网盘，正好有一个微软E5的订阅和A1的订阅，于是便开始着手研究网盘站的搭建。</p>
+<p>下面我会介绍我尝试过的几个网盘搭建程序并进行对比供大家参考。</p>
+<h3 id="OneManager"><a href="#OneManager" class="headerlink" title="OneManager"></a>OneManager</h3><p>源码地址：<a target="_blank" rel="noopener" href="https://github.com/qkqpttgf/OneManager-php">OneManager-php</a></p>
+<p>Demo：<a target="_blank" rel="noopener" href="https://herooneindex.herokuapp.com/">OneManager Heroku Demo</a></p>
+<p>这是一个PHP开发的OneDrive目录索引程序，也是我目前主要在用的一个。</p>
+<p>OneManager同样支持云函数搭建，如腾讯，阿里云，百度云，华为云等。我目前将OneManager搭建到了<a target="_blank" rel="noopener" href="https://console.cloud.tencent.com/scf/list">腾讯云函数</a>，响应速度还算可以。</p>
+<h3 id="OnePoint"><a href="#OnePoint" class="headerlink" title="OnePoint"></a>OnePoint</h3><p>源码地址：<a target="_blank" rel="noopener" href="https://github.com/ukuq/onepoint">onepoint</a></p>
+<p>Demo：<a target="_blank" rel="noopener" href="https://onepoint.onesrc.workers.dev/">OnePoint Demo</a></p>
+<p>这是一个以Node.js为核心的网盘索引程序。目前支持的网盘有：</p>
+<ul>
+<li>OneDrive</li>
+<li>Google Drive</li>
+<li>coding</li>
+<li>Teambition</li>
+<li>node_fs</li>
+</ul>
+<p>由于Nodejs的核心，它甚至可以部署在<a target="_blank" rel="noopener" href="https://workers.cloudflare.com/">CloudFlare Workers</a>上（虽然CloudFlare的速度感人）。</p>
+<p>OnePoint支持文件访问代理，之前一段时间OD的文件下载速度非常玄学，用代理之后会快一点，多线程下载搭配代理使用更佳。不过最近听说OD换了微软Azure的CDN，访问下载速度有可观的改善。</p>
+<p>有一点忘了提了，上面两个的网站界面做的都一般，极大降低用户体验<del>(bushi)</del></p>
+<p>不过这两个程序都是可以自己定义界面主题的，虽然开发起来有些麻烦就是了。</p>
+<p>而下面的这个界面就比较简洁大方了。</p>
+<h3 id="ShareList"><a href="#ShareList" class="headerlink" title="ShareList"></a>ShareList</h3><p>源码地址：<a target="_blank" rel="noopener" href="https://github.com/reruin/sharelist">sharelist</a></p>
+<p>Demo：无</p>
+<p>ShareList同样是Nodejs核心，但是与上面两个相比，Sharelist支持的网盘就比较多，有：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/googledrive">Google Drive</a></li>
+<li><a target="_blank" rel="noopener" href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/onedrive">One Drive</a></li>
+<li><a target="_blank" rel="noopener" href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/ctyun">天翼云</a></li>
+<li><a target="_blank" rel="noopener" href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/caiyun">和彩云</a></li>
+<li><a target="_blank" rel="noopener" href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/lanzou">蓝奏云</a></li>
+<li><a target="_blank" rel="noopener" href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/local">本地文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/webdav">WebDAV</a></li>
+<li><a target="_blank" rel="noopener" href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/sftp">SFTP</a></li>
+<li><a target="_blank" rel="noopener" href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/teambition">Teambition</a></li>
+<li><a target="_blank" rel="noopener" href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/baidu">Baidu</a></li>
+<li><a target="_blank" rel="noopener" href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/aliyundrive">Aliyun Drive</a></li>
+</ul>
+<p>而且Sharelist也支持流量中转，不过没有在线上传文件的功能。但对于展示而言，ShareList的功能已经完全够用了。</p>
+<p>不过它也有缺点，由于没有对云函数做专门的适配，目前只能部署在服务器、Heroku、Workers上。</p>
+<h3 id="PyOne"><a href="#PyOne" class="headerlink" title="PyOne"></a>PyOne</h3><p><strong>注意：此项目已停止维护</strong></p>
+<p>源码地址：<a target="_blank" rel="noopener" href="https://github.com/abbeyokgo/PyOne">PyOne</a></p>
+<p>Demo：无</p>
+<p>由于改项目以Python为后端核心，暂时没有合适的服务器部署，而且作者貌似不再维护，但我还是把这个项目贴了出来。因为光看文档就能看出来，这是一个相当强大的网盘程序。文档地址：<a target="_blank" rel="noopener" href="https://abbeyokgo.github.io/">https://abbeyokgo.github.io/</a></p>
+<p>不过，这么强大的程序却只支持OneDrive，算是美中不足的一点。</p>
+<h3 id="Alist"><a href="#Alist" class="headerlink" title="Alist"></a>Alist</h3><p>源码地址：<a target="_blank" rel="noopener" href="https://github.com/Xhofe/alist">alist</a></p>
+<p>Demo：<a target="_blank" rel="noopener" href="https://alist.nn.ci/">Alist Demo</a></p>
+<p>这是一个刚诞生不久的网盘索引程序，以性能出众的Go语言为后端核心，<strong>只支持阿里云盘</strong>。</p>
+<p>虽然只支持阿里云盘，但它任然有很多的可圈可点之处。如：前后端分离、后端逻辑清晰、支持文件上传、加密访问等等。</p>
+<p>虽然以Go为核心，但程序的运行方式只有编译好的可执行文件，极大的降低了学习成本。不过可执行文件目前只能运行在服务器上就是了。</p>
+<p>但这并不算缺点，由于前后端分离的特性，里可以把前端运行在任何支持Vue.js的Nodejs环境中，比如云函数、Heroku、Vercel（当然服务器也可以），极大的节省了流量开销。</p>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>由于本人擅长造轮子的性格(bushi)，一直觉得目前的网盘索引程序不是那么完美，既然如此，就想在有生之年开发一个自己的网盘索引程序，打算以Nodejs为核心(毕竟轻量)，希望在有生之年能看到吧~（这不又给自己挖了个新坑）</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Revincx</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.revincx.icu/posts/my-cloud-storages/">https://blog.revincx.icu/posts/my-cloud-storages/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.revincx.icu" target="_blank">Revincx的小破站</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BA%91%E5%82%A8%E5%AD%98/">云储存</a><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%AB%99/">网站</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/wechat-app-dev/"><img class="next-cover" data-lazy-src="https://tva2.sinaimg.cn/large/9bd9b167gy1g2qk7kdwdcj213y0u04fz.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">小程序开发初探及沉浸式界面设计</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="http://q1.qlogo.cn/g?b=qq&amp;nk=2635278791&amp;s=640" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Revincx</div><div class="author-info__description">别问，问就是在摸鱼🐟</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Revincx" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:revincx@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#OneManager"><span class="toc-number">1.</span> <span class="toc-text">OneManager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OnePoint"><span class="toc-number">2.</span> <span class="toc-text">OnePoint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ShareList"><span class="toc-number">3.</span> <span class="toc-text">ShareList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PyOne"><span class="toc-number">4.</span> <span class="toc-text">PyOne</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Alist"><span class="toc-number">5.</span> <span class="toc-text">Alist</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">6.</span> <span class="toc-text">后记</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Revincx</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script src="/js/inject.js"></script><script async src="/live2d-widget/autoload.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

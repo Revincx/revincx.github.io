@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>我的个人网盘搭建之路</title>
+      <link href="/posts/my-cloud-storages/"/>
+      <url>/posts/my-cloud-storages/</url>
+      
+        <content type="html"><![CDATA[<p>前一段时间突然心血来潮，想学大佬搞一个个人网盘，正好有一个微软E5的订阅和A1的订阅，于是便开始着手研究网盘站的搭建。</p><p>下面我会介绍我尝试过的几个网盘搭建程序并进行对比供大家参考。</p><h3 id="OneManager"><a href="#OneManager" class="headerlink" title="OneManager"></a>OneManager</h3><p>源码地址：<a href="https://github.com/qkqpttgf/OneManager-php">OneManager-php</a></p><p>Demo：<a href="https://herooneindex.herokuapp.com/">OneManager Heroku Demo</a></p><p>这是一个PHP开发的OneDrive目录索引程序，也是我目前主要在用的一个。</p><p>OneManager同样支持云函数搭建，如腾讯，阿里云，百度云，华为云等。我目前将OneManager搭建到了<a href="https://console.cloud.tencent.com/scf/list">腾讯云函数</a>，响应速度还算可以。</p><h3 id="OnePoint"><a href="#OnePoint" class="headerlink" title="OnePoint"></a>OnePoint</h3><p>源码地址：<a href="https://github.com/ukuq/onepoint">onepoint</a></p><p>Demo：<a href="https://onepoint.onesrc.workers.dev/">OnePoint Demo</a></p><p>这是一个以Node.js为核心的网盘索引程序。目前支持的网盘有：</p><ul><li>OneDrive</li><li>Google Drive</li><li>coding</li><li>Teambition</li><li>node_fs</li></ul><p>由于Nodejs的核心，它甚至可以部署在<a href="https://workers.cloudflare.com/">CloudFlare Workers</a>上（虽然CloudFlare的速度感人）。</p><p>OnePoint支持文件访问代理，之前一段时间OD的文件下载速度非常玄学，用代理之后会快一点，多线程下载搭配代理使用更佳。不过最近听说OD换了微软Azure的CDN，访问下载速度有可观的改善。</p><p>有一点忘了提了，上面两个的网站界面做的都一般，极大降低用户体验<del>(bushi)</del></p><p>不过这两个程序都是可以自己定义界面主题的，虽然开发起来有些麻烦就是了。</p><p>而下面的这个界面就比较简洁大方了。</p><h3 id="ShareList"><a href="#ShareList" class="headerlink" title="ShareList"></a>ShareList</h3><p>源码地址：<a href="https://github.com/reruin/sharelist">sharelist</a></p><p>Demo：无</p><p>ShareList同样是Nodejs核心，但是与上面两个相比，Sharelist支持的网盘就比较多，有：</p><ul><li><a href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/googledrive">Google Drive</a></li><li><a href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/onedrive">One Drive</a></li><li><a href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/ctyun">天翼云</a></li><li><a href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/caiyun">和彩云</a></li><li><a href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/lanzou">蓝奏云</a></li><li><a href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/local">本地文件</a></li><li><a href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/webdav">WebDAV</a></li><li><a href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/sftp">SFTP</a></li><li><a href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/teambition">Teambition</a></li><li><a href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/baidu">Baidu</a></li><li><a href="https://reruin.github.io/sharelist/docs/#/zh-cn/plugins/aliyundrive">Aliyun Drive</a></li></ul><p>而且Sharelist也支持流量中转，不过没有在线上传文件的功能。但对于展示而言，ShareList的功能已经完全够用了。</p><p>不过它也有缺点，由于没有对云函数做专门的适配，目前只能部署在服务器、Heroku、Workers上。</p><h3 id="PyOne"><a href="#PyOne" class="headerlink" title="PyOne"></a>PyOne</h3><p><strong>注意：此项目已停止维护</strong></p><p>源码地址：<a href="https://github.com/abbeyokgo/PyOne">PyOne</a></p><p>Demo：无</p><p>由于改项目以Python为后端核心，暂时没有合适的服务器部署，而且作者貌似不再维护，但我还是把这个项目贴了出来。因为光看文档就能看出来，这是一个相当强大的网盘程序。文档地址：<a href="https://abbeyokgo.github.io/">https://abbeyokgo.github.io/</a></p><p>不过，这么强大的程序却只支持OneDrive，算是美中不足的一点。</p><h3 id="Alist"><a href="#Alist" class="headerlink" title="Alist"></a>Alist</h3><p>源码地址：<a href="https://github.com/Xhofe/alist">alist</a></p><p>Demo：<a href="https://alist.nn.ci/">Alist Demo</a></p><p>这是一个刚诞生不久的网盘索引程序，以性能出众的Go语言为后端核心，<strong>只支持阿里云盘</strong>。</p><p>虽然只支持阿里云盘，但它任然有很多的可圈可点之处。如：前后端分离、后端逻辑清晰、支持文件上传、加密访问等等。</p><p>虽然以Go为核心，但程序的运行方式只有编译好的可执行文件，极大的降低了学习成本。不过可执行文件目前只能运行在服务器上就是了。</p><p>但这并不算缺点，由于前后端分离的特性，里可以把前端运行在任何支持Vue.js的Nodejs环境中，比如云函数、Heroku、Vercel（当然服务器也可以），极大的节省了流量开销。</p><h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>由于本人擅长造轮子的性格(bushi)，一直觉得目前的网盘索引程序不是那么完美，既然如此，就想在有生之年开发一个自己的网盘索引程序，打算以Nodejs为核心(毕竟轻量)，希望在有生之年能看到吧~（这不又给自己挖了个新坑）</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 云储存 </tag>
+            
+            <tag> 网站 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>小程序开发初探及沉浸式界面设计</title>
       <link href="/posts/wechat-app-dev/"/>
       <url>/posts/wechat-app-dev/</url>
