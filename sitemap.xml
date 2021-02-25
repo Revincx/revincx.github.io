@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.revincx.icu/posts/vue-render-function/</loc>
+    
+    <lastmod>2021-02-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.revincx.icu/about/index.html</loc>
+    
+    <lastmod>2021-02-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.revincx.icu/link/index.html</loc>
+    
+    <lastmod>2021-02-25</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.revincx.icu/words/index.html</loc>
     
     <lastmod>2021-02-24</lastmod>
@@ -40,20 +61,6 @@
     <loc>https://blog.revincx.icu/posts/jiaowu-system-analysis/</loc>
     
     <lastmod>2021-02-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.revincx.icu/link/index.html</loc>
-    
-    <lastmod>2021-02-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.revincx.icu/about/index.html</loc>
-    
-    <lastmod>2021-02-10</lastmod>
     
   </url>
   
@@ -159,6 +166,20 @@
   
   <url>
     <loc>https://blog.revincx.icu/tags/%E7%BD%91%E7%AB%99/</loc>
+    <lastmod>2021-02-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.revincx.icu/tags/Vue-js/</loc>
+    <lastmod>2021-02-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.revincx.icu/tags/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2021-02-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
