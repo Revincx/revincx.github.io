@@ -321,9 +321,10 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', btf.throttle(function (e) {
       const currentTop = window.scrollY || document.documentElement.scrollTop
       const isDown = scrollDirection(currentTop)
+      if(isDown) $header.classList.add('nav-visible','nav-fixed')
       if (currentTop > 56) {
         if (isDown) {
-          if ($header.classList.contains('nav-visible')) $header.classList.remove('nav-visible')
+          // if ($header.classList.contains('nav-visible')) $header.classList.remove('nav-visible')
           if (isChatBtnShow && isChatShow === true) {
             chatBtnHide()
             isChatShow = false
