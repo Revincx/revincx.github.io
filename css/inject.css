@@ -659,3 +659,27 @@ del{
   .el-input__inner:focus{
 	  border-color: #409eff!important;
   }
+
+/* Google Sans 字体 */
+
+@font-face{
+	font-family: 'GoogleSans';
+	src: url('http://cdn.jsdelivr.net/gh/sahibjotsaggu/Google-Sans-Fonts/GoogleSans-Regular.ttf') format('TrueType');
+}
+
+/* 代码框语言小写 */
+
+#article-container .highlight-tools .code-lang{
+	text-transform: none;
+}
+
+/* #article-container .highlight-tools .code-lang::first-letter{
+	text-transform: uppercase;
+} */
+
+/* 导航栏背景模糊 */
+
+#page-header.nav-visible #nav{
+	-webkit-backdrop-filter: blur(10px);
+	        backdrop-filter: blur(10px);
+}
