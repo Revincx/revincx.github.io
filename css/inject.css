@@ -660,11 +660,16 @@ del{
 	  border-color: #409eff!important;
   }
 
-/* Google Sans 字体 */
+/* 字体 */
 
 @font-face{
 	font-family: 'GoogleSans';
 	src: url('http://cdn.jsdelivr.net/gh/sahibjotsaggu/Google-Sans-Fonts/GoogleSans-Regular.ttf') format('TrueType');
+}
+
+@font-face{
+	font-family: 'FIJ';
+	src: url('/fonts/MicrosoftJhengHeiRegular-01.ttf') format('TrueType');
 }
 
 /* 代码框语言小写 */
@@ -683,3 +688,4 @@ del{
 	-webkit-backdrop-filter: blur(10px);
 	        backdrop-filter: blur(10px);
 }
+
