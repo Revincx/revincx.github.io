@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>使用Heroku部署Node.js服务</title>
+      <link href="/posts/heroku-api/"/>
+      <url>/posts/heroku-api/</url>
+      
+        <content type="html"><![CDATA[<h4 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h4><p>最近在研究<a href="https://nodejs.org/">Node.js</a>，这个东西十分强大，打算自己琢磨琢磨后端，于是就试着随便写个接口玩玩。不过既然要学习，不部署到公网玩咋行</p><p>网上查了下资料，最后总结出三种方案：</p><ol><li><p>服务器/VPS部署</p><p>鉴于我自己的服务器资源有限，而且还挂着网站和代理，再运行个Nodejs实在吃力，干脆放弃了这个想法。</p></li><li><p>云函数部署</p><p>云函数的话目前只能选国内的，按量计费环境怎么想心里都不太安稳，而且云函数的Nodejs还要用专门的一套接口，麻烦。</p></li><li><p>Heroku部署</p><p><a href="https://www.heroku.com/">Heroku</a>是国外的一家应用平台，支持PHP，Ruby，Nodejs等多种环境，而且有免费套餐，不用担心扣费，于是就决定是它了。</p></li></ol><h4 id="使用Heroku-Toolbelt"><a href="#使用Heroku-Toolbelt" class="headerlink" title="使用Heroku Toolbelt"></a>使用Heroku Toolbelt</h4><p><a href="https://blog.heroku.com/the_heroku_toolbelt">Heroku Toolbelt</a>是Heroku的一个本地命令行工具，使用该工具可以将本地的项目部署到Heroku</p><p>下载并安装完成后，在 shell 中输入<code>heroku login</code>，用创建<code>heroku</code>账号的<code>email</code>和<code>密码</code>登陆</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ heroku login</span><br><span class="line">Enter your Heroku credentials.</span><br><span class="line">Email: adam@example.com</span><br><span class="line">Password (typing will be hidden):</span><br><span class="line">Authentication successful.</span><br></pre></td></tr></table></figure><h4 id="配置Heroku程序"><a href="#配置Heroku程序" class="headerlink" title="配置Heroku程序"></a>配置Heroku程序</h4><p>我们本地运行Node程序时一般都是自己指定的端口，而Heroku的web服务端口需要再运行进程的环境变量中获取。</p><p>修改Server监听逻辑：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> port = process.env.PORT || <span class="number">8081</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = app.listen(port,<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> port = server.address().port</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`Server is running at http://localhost:<span class="subst">$&#123;port&#125;</span>/`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><p>另外，Heroku有一个叫<code>Procfile</code>的启动配置：</p><blockquote><p>Heroku 需要知道使用哪个命令启动程序。命令在一个名为<code>Procfile</code>(<em>没有后缀</em>)的特殊文件中指定。这个文件必须放在程序的顶级文件夹中。</p></blockquote><p>在程序根目录创建<code>Procfile</code>文件，在里面输入：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">web:</span> <span class="string">node</span> <span class="string">app.js</span></span><br></pre></td></tr></table></figure><p>这里的web是任务的名称，而web这个名称在启动web程序时名称是被指定的。</p><h4 id="部署到Heroku"><a href="#部署到Heroku" class="headerlink" title="部署到Heroku"></a>部署到Heroku</h4><p>首先我们在本地要有一个git仓库：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Inital Commit&quot;</span></span><br></pre></td></tr></table></figure><p>然后用Heroku的命令行工具创建app并部署：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">heroku create my-nodejs-app</span><br><span class="line">git push heroku master</span><br></pre></td></tr></table></figure><p>此时Heroku1便会将仓库上传到云端安装依赖并运行。</p><h4 id="使用CloudFlare加速"><a href="#使用CloudFlare加速" class="headerlink" title="使用CloudFlare加速"></a>使用CloudFlare加速</h4><p>不得不说Heroku的美国服务器在中国访问是真的慢…于是套了一个CloudFlare的CDN，勉强能用。</p><p>CloudFlare自选节点部署请参考文章：<a href="https://ionego.net/1323.html">CloudFlare 自选节点教程</a>，我用的Partener是<a href="http://cdn.bnxb.com/">笨牛</a>。</p><p>部署好的API地址：<a href="https://api.revincx.icu/">https://api.revincx.icu</a> ，私人站点，请勿滥用。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 编程 </tag>
+            
+            <tag> Node.js </tag>
+            
+            <tag> Heroku </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>一次配置Nginx多站点的折腾记录</title>
       <link href="/posts/server-config/"/>
       <url>/posts/server-config/</url>

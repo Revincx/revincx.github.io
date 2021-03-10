@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.revincx.icu/posts/heroku-api/</loc>
+    
+    <lastmod>2021-03-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.revincx.icu/tags/index.html</loc>
+    
+    <lastmod>2021-03-10</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.revincx.icu/words/index.html</loc>
     
     <lastmod>2021-03-08</lastmod>
@@ -82,13 +96,6 @@
     <loc>https://blog.revincx.icu/posts/wechat-app-dev/</loc>
     
     <lastmod>2021-02-09</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.revincx.icu/tags/index.html</loc>
-    
-    <lastmod>2021-02-05</lastmod>
     
   </url>
   
@@ -208,6 +215,20 @@
   
   <url>
     <loc>https://blog.revincx.icu/tags/%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2021-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.revincx.icu/tags/Node-js/</loc>
+    <lastmod>2021-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.revincx.icu/tags/Heroku/</loc>
     <lastmod>2021-03-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
