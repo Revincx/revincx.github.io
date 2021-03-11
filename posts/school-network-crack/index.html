@@ -1,0 +1,319 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>一种绕过深澜校园网认证的思路 | Revincx的小破站</title><meta name="keywords" content="服务器,校园网"><meta name="author" content="Revincx"><meta name="copyright" content="Revincx"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文章所探讨内容仅做学习研究使用，请勿用作其他违法用途！  起因前几天在用校园网进教务系统的时候无意间发现就算不进行认证登录，也是可以正常访问教务系统的。不过以前我只知道可以通过内网IP的形式打开，今天无意中尝试的用域名，发现也能打开。 接着我就好奇了一下，是不是所有学校域名的网站都能打开呢？于是，我尝试了学校官网、图书馆、邮件系统的网址，发现都可以在不认证的情况下直接打开。 起初我以为这些学校网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一种绕过深澜校园网认证的思路">
+<meta property="og:url" content="https://blog.revincx.icu/posts/school-network-crack/index.html">
+<meta property="og:site_name" content="Revincx的小破站">
+<meta property="og:description" content="本文章所探讨内容仅做学习研究使用，请勿用作其他违法用途！  起因前几天在用校园网进教务系统的时候无意间发现就算不进行认证登录，也是可以正常访问教务系统的。不过以前我只知道可以通过内网IP的形式打开，今天无意中尝试的用域名，发现也能打开。 接着我就好奇了一下，是不是所有学校域名的网站都能打开呢？于是，我尝试了学校官网、图书馆、邮件系统的网址，发现都可以在不认证的情况下直接打开。 起初我以为这些学校网">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/9bd9b167gy1g4lhoxkoyej21hc0xckh5.jpg">
+<meta property="article:published_time" content="2021-03-11T11:23:07.000Z">
+<meta property="article:modified_time" content="2021-03-11T12:31:24.695Z">
+<meta property="article:author" content="Revincx">
+<meta property="article:tag" content="服务器">
+<meta property="article:tag" content="校园网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva3.sinaimg.cn/large/9bd9b167gy1g4lhoxkoyej21hc0xckh5.jpg"><link rel="shortcut icon" href="/images/favico.png"><link rel="canonical" href="https://blog.revincx.icu/posts/school-network-crack/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-11 20:31:24'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@latest/butterfly/css/macblack.css"><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Revincx的小破站" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="http://q1.qlogo.cn/g?b=qq&amp;nk=2635278791&amp;s=640" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/words/"><i class="fa-fw fas fa-feather-alt"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tva3.sinaimg.cn/large/9bd9b167gy1g4lhoxkoyej21hc0xckh5.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Revincx的小破站</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/words/"><i class="fa-fw fas fa-feather-alt"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">一种绕过深澜校园网认证的思路</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-11T11:23:07.000Z" title="发表于 2021-03-11 19:23:07">2021-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-11T12:31:24.695Z" title="更新于 2021-03-11 20:31:24">2021-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div class="snote idea yellow">本文章所探讨内容仅做学习研究使用，请勿用作其他违法用途！</div>
+
+<h4 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h4><p>前几天在用校园网进教务系统的时候无意间发现就算不进行认证登录，也是可以正常访问教务系统的。不过以前我只知道可以通过内网IP的形式打开，今天无意中尝试的用域名，发现也能打开。</p>
+<p>接着我就好奇了一下，是不是所有学校域名的网站都能打开呢？于是，我尝试了学校官网、图书馆、邮件系统的网址，发现都可以在不认证的情况下直接打开。</p>
+<p>起初我以为这些学校网站的服务器都是在学校内网，ping了一下官网的网址，ip查询结果是联通教育网，地域是我们学校附近（河南）。然而，当我尝试ping邮件系统的网址时发现，该IP的地域位于中国广东，并不是教育网。（也好理解，邮件系统对接的是腾讯企业邮箱）</p>
+<p>于是我便产生了怀疑，既然不认证也能直接访问广域网，那这个认证机制的意义何在？</p>
+<h4 id="进一步研究"><a href="#进一步研究" class="headerlink" title="进一步研究"></a>进一步研究</h4><p>为了研究校园网的认证系统是如何拦截的，我首先提出了直接对于域名进行识别。</p>
+<p>为了验证这个猜想，我便进行了下面的Host实验。</p>
+<h4 id="host实验"><a href="#host实验" class="headerlink" title="host实验"></a>host实验</h4><p>host就相当于在本地提前对域名进行解析，可以直接覆盖上游DNS解析结果（个人是这么理解的），那么只要将学校域名通过host解析到其他的IP，然后通过该域名访问，就可以验证上面的猜想是否成立。</p>
+<p>于是我便在电脑的host里增加了一条(IP地址就不公开了)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">47.xxx.xxx.xxx mail.haut.edu.cn</span><br></pre></td></tr></table></figure>
+
+<p>然后在浏览器中打开<code> mail.haut.edu.cn</code>，测试可以打开我服务器的页面。</p>
+<p>接着进一步验证认证系统是否放行所有haut.edu.cn的子域名。</p>
+<p>修改Host文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">47.xxx.xxx.xxx test123.haut.edu.cn</span><br></pre></td></tr></table></figure>
+
+<p>同样进行上述操作，测试结果仍成立。</p>
+<p>所以我们便可得出结论：对于所有haut.edu.cn的子域名，认证系统均予以放行。而对于其他域名，认证系统只是进行了简单的重定向，并没有封掉IP。</p>
+<h4 id="绕过认证的思路"><a href="#绕过认证的思路" class="headerlink" title="绕过认证的思路"></a>绕过认证的思路</h4><p>在上述结论成立的基础下，我们就可以在服务器部署代理程序，然后对代理流量进行域名伪装。</p>
+<p>这里需要注意的是，服务器的代理端口一定要是80或443端口，因为我们要伪装成http流量。</p>
+<p>同时为了保险起见，我还是在hosts文件中保留了上面的解析。</p>
+<p>下面测试我用的是v2ray代理，服务端开启TCP_HTTP伪装模式，监听80端口。</p>
+<p>为了方便部署，我这里直接使用了<a target="_blank" rel="noopener" href="https://ssr.tools/1026">233boy的部署脚本</a>。</p>
+<p><img src= "https://cdn.jsdelivr.net/gh/Revincx/revincx.github.io@master/img/loading.gif" data-lazy-src="https://pic.baixiongz.com/uploads/2021/03/11/c725e86994bef.jpg"></p>
+<p>然后在本地添加配置文件，伪装类型选择http，伪装域名填haut.edu.cn的子域名，我测试填的是<code>mail.haut.edu.cn</code></p>
+<p>然后切换到学校的WiFi，将v2rayN切换到全局模式，用浏览器打开网页测试。</p>
+<p>因为我服务器的宽带只有1Mbps所以加载了一段时间，最后还是打开了。</p>
+<p>不过既然能打开，就说明此方案可行。</p>
+<h4 id="仍存在的问题"><a href="#仍存在的问题" class="headerlink" title="仍存在的问题"></a>仍存在的问题</h4><ol>
+<li><p>全局代理问题</p>
+<p>我们用的v2rayN的全局代理只是对于客户端在本地监听的端口而言的。浏览器使用的系统代理只是针对于浏览器的。所以我们需要一个传输层的代理来接管所有的系统流量才行。比如像 Proxifier, SSTap, Surge 那种（这些软件我也没用过）。</p>
+</li>
+<li><p>服务器资费问题</p>
+<p>因为搭建代理程序需要服务器，而且要满足日常使用，服务器的宽带得够大才行。而服务器的宽带费用可能就比校园网的费用还多了，最终折算下来很可能得不偿失。</p>
+</li>
+</ol>
+<p>不过如果你正好有足够的服务器资源，其实还是可以尝试的。另外，如果你有机场的的节点，并且支持http伪装且端口是80或443，实测也可以直接更改域名伪装参数来实现认证绕过。不过你的流量从外国绕了一圈再绕回来的话，效率也就可想而知了。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Revincx</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.revincx.icu/posts/school-network-crack/">https://blog.revincx.icu/posts/school-network-crack/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.revincx.icu" target="_blank">Revincx的小破站</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a><a class="post-meta__tags" href="/tags/%E6%A0%A1%E5%9B%AD%E7%BD%91/">校园网</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/heroku-api/"><img class="next-cover" data-lazy-src="https://tva4.sinaimg.cn/large/9bd9b167gy1fwrsx8jju3j21hc0u0guj.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">使用Heroku部署Node.js服务</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="http://q1.qlogo.cn/g?b=qq&amp;nk=2635278791&amp;s=640" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Revincx</div><div class="author-info__description">又摸了一天鱼，好累啊~</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Revincx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Revincx" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:revincx@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%B7%E5%9B%A0"><span class="toc-number">1.</span> <span class="toc-text">起因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E7%A0%94%E7%A9%B6"><span class="toc-number">2.</span> <span class="toc-text">进一步研究</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#host%E5%AE%9E%E9%AA%8C"><span class="toc-number">3.</span> <span class="toc-text">host实验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E8%AE%A4%E8%AF%81%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="toc-number">4.</span> <span class="toc-text">绕过认证的思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">仍存在的问题</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Revincx</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><span class="footer-separator">|</span><span>加速 </span><a target="_blank" rel="noopener" href="https://www.jsdelivr.com/">jsDelivr</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'revincx-web-5g1gx47o69d8f025',
+      region: ''
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'revincx-web-5g1gx47o69d8f025',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script src="/js/inject.js"></script><script async src="/live2d-widget/autoload.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
