@@ -1107,7 +1107,8 @@ blockquote footer cite:before {
   right: 1.8rem;
 }
 #article-container figure.highlight .highlight-tools .code-lang {
-  left: 3.8rem !important;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .article-sort {
   margin-left: 0.5rem;

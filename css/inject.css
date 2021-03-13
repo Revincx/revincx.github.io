@@ -669,7 +669,7 @@ del{
 
 @font-face{
 	font-family: 'FIJ';
-	src: url('/fonts/MicrosoftJhengHeiRegular-01.ttf') format('TrueType');
+	src: url('/fonts/test.ttf') format('TrueType');
 }
 
 /* 代码框语言小写 */
