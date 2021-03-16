@@ -1,0 +1,736 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Java注释和运行原理 | Revincx的小破站</title><meta name="author" content="Revincx"><meta name="copyright" content="Revincx"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="详述Java注释为了方便注明程序的功能与开发人员调试，现代计算机语言都有着注释功能。 单行注释与块注释 行注释 对一行文字进行注释，只需在注释文本前加上两个斜杠&#x2F;&#x2F; 12System.out.println(&quot;这是输出的文字&quot;);&#x2F;&#x2F; 这是一段注释  块注释（多行注释） 对一段需要换行的长文本进行注释需要在注释以&#x2F;*开头，以*&#x2F;结尾。 1234System.out.printl">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Java注释和运行原理">
+<meta property="og:url" content="https://blog.revincx.icu/homework/1-java-basic.html">
+<meta property="og:site_name" content="Revincx的小破站">
+<meta property="og:description" content="详述Java注释为了方便注明程序的功能与开发人员调试，现代计算机语言都有着注释功能。 单行注释与块注释 行注释 对一行文字进行注释，只需在注释文本前加上两个斜杠&#x2F;&#x2F; 12System.out.println(&quot;这是输出的文字&quot;);&#x2F;&#x2F; 这是一段注释  块注释（多行注释） 对一段需要换行的长文本进行注释需要在注释以&#x2F;*开头，以*&#x2F;结尾。 1234System.out.printl">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-03-14T01:07:00.000Z">
+<meta property="article:modified_time" content="2021-03-16T13:18:43.145Z">
+<meta property="article:author" content="Revincx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/images/favico.png"><link rel="canonical" href="https://blog.revincx.icu/homework/1-java-basic"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-03-16 21:18:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@latest/butterfly/css/macblack.css"><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Revincx的小破站" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://q1.qlogo.cn/g?b=qq&amp;nk=2635278791&amp;s=640" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/words/"><i class="fa-fw fas fa-feather-alt"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url('https://tva2.sinaimg.cn/large/9bd9b167gy1g2qk137tcvj21hc0u0tjf.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Revincx的小破站</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/words/"><i class="fa-fw fas fa-feather-alt"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">Java注释和运行原理</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><h3 id="详述Java注释"><a href="#详述Java注释" class="headerlink" title="详述Java注释"></a>详述Java注释</h3><p>为了方便注明程序的功能与开发人员调试，现代计算机语言都有着注释功能。</p>
+<h4 id="单行注释与块注释"><a href="#单行注释与块注释" class="headerlink" title="单行注释与块注释"></a>单行注释与块注释</h4><ul>
+<li><p>行注释</p>
+<p>对一行文字进行注释，只需在注释文本前加上两个斜杠<code>//</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;这是输出的文字&quot;</span>);</span><br><span class="line"><span class="comment">// 这是一段注释</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>块注释（多行注释）</p>
+<p>对一段需要换行的长文本进行注释需要在注释以<code>/*</code>开头，以<code>*/</code>结尾。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;这是输出的文字&quot;</span>);    </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    这是一块注释。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="带有文档的多行注释"><a href="#带有文档的多行注释" class="headerlink" title="带有文档的多行注释"></a>带有文档的多行注释</h4><p>文档注释又叫说明注释，它允许你在程序中嵌入程序的信息。它以<code>/**</code>开始，以<code>*/</code>结束。这种注释可以生成的javadoc文档中。举例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@Author</span>: Revincx</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@Description</span>: 这是一段描述性文字。</span></span><br><span class="line"><span class="comment">    */</span></span><br></pre></td></tr></table></figure>
+
+<p>除了上面的意外，javadoc中还可插入下面的字段（摘自<a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-documentation.html">菜鸟教程</a>）：</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>标签</strong></th>
+<th align="left"><strong>描述</strong></th>
+<th align="left"><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">@author</td>
+<td align="left">标识一个类的作者</td>
+<td align="left">@author description</td>
+</tr>
+<tr>
+<td align="left">@deprecated</td>
+<td align="left">指名一个过期的类或成员</td>
+<td align="left">@deprecated description</td>
+</tr>
+<tr>
+<td align="left">{@docRoot}</td>
+<td align="left">指明当前文档根目录的路径</td>
+<td align="left">Directory Path</td>
+</tr>
+<tr>
+<td align="left">@exception</td>
+<td align="left">标志一个类抛出的异常</td>
+<td align="left">@exception exception-name explanation</td>
+</tr>
+<tr>
+<td align="left">{@inheritDoc}</td>
+<td align="left">从直接父类继承的注释</td>
+<td align="left">Inherits a comment from the immediate surperclass.</td>
+</tr>
+<tr>
+<td align="left">{@link}</td>
+<td align="left">插入一个到另一个主题的链接</td>
+<td align="left">{@link name text}</td>
+</tr>
+<tr>
+<td align="left">{@linkplain}</td>
+<td align="left">插入一个到另一个主题的链接，但是该链接显示纯文本字体</td>
+<td align="left">Inserts an in-line link to another topic.</td>
+</tr>
+<tr>
+<td align="left">@param</td>
+<td align="left">说明一个方法的参数</td>
+<td align="left">@param parameter-name explanation</td>
+</tr>
+<tr>
+<td align="left">@return</td>
+<td align="left">说明返回值类型</td>
+<td align="left">@return explanation</td>
+</tr>
+<tr>
+<td align="left">@see</td>
+<td align="left">指定一个到另一个主题的链接</td>
+<td align="left">@see anchor</td>
+</tr>
+<tr>
+<td align="left">@serial</td>
+<td align="left">说明一个序列化属性</td>
+<td align="left">@serial description</td>
+</tr>
+<tr>
+<td align="left">@serialData</td>
+<td align="left">说明通过writeObject( ) 和 writeExternal( )方法写的数据</td>
+<td align="left">@serialData description</td>
+</tr>
+<tr>
+<td align="left">@serialField</td>
+<td align="left">说明一个ObjectStreamField组件</td>
+<td align="left">@serialField name type description</td>
+</tr>
+<tr>
+<td align="left">@since</td>
+<td align="left">标记当引入一个特定的变化时</td>
+<td align="left">@since release</td>
+</tr>
+<tr>
+<td align="left">@throws</td>
+<td align="left">和 @exception标签一样.</td>
+<td align="left">The @throws tag has the same meaning as the @exception tag.</td>
+</tr>
+<tr>
+<td align="left">{@value}</td>
+<td align="left">显示常量的值，该常量必须是static属性。</td>
+<td align="left">Displays the value of a constant, which must be a static field.</td>
+</tr>
+<tr>
+<td align="left">@version</td>
+<td align="left">指定类的版本</td>
+<td align="left">@version info</td>
+</tr>
+</tbody></table>
+<p>在IntelliJ IDEA中，可以使用顶栏 Tools 中的 Generate JavaDoc 选项来生成HTML格式的说明文档。</p>
+<h3 id="Java运行原理"><a href="#Java运行原理" class="headerlink" title="Java运行原理"></a>Java运行原理</h3><p>一个java文件的大致运行流程是这样的：</p>
+<div class="mermaid">graph LR;
+
+Java源文件--编译--&gt;Java字节码文件;
+Java字节码文件--运行--&gt;结果;
+ </div>
+
+<p>字节码文件不同于二进制文件，二进制文件是可以被计算机直接执行的。当对字节码执行编译的<code>java</code>命令时，字节码文件就会被编译成二进制文件。</p>
+<p>具体流程：</p>
+<div class="mermaid">graph LR;
+
+将字节码加载到内存--&gt;校验字节码 ;
+ </div>
+
+<h3 id="Java标识符"><a href="#Java标识符" class="headerlink" title="Java标识符"></a>Java标识符</h3><p>基本要求：</p>
+<ol>
+<li>Java标识符必须由字母(大小写均可)，数字，下划线，<code>$</code>符号组成。</li>
+<li>不能以数字开头。</li>
+<li>没有长度限制。</li>
+<li>不能是关键字。</li>
+</ol>
+<p>规范要求：</p>
+<ol>
+<li>见名知义，命名规范</li>
+<li>大小写规范</li>
+</ol>
+<p>Java中的关键字如下（摘自<a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-basic-syntax.html">菜鸟教程</a>）：</p>
+<table class="reference">
+<tbody><tr>
+<th>类别</th>
+<th>关键字</th>
+<th>说明</th>
+</tr>
+<tr>
+<td rowspan="4" align="center">访问控制</td>
+<td>private</td>
+<td>私有的</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>受保护的</td>
+</tr>
+<tr>
+<td>public</td>
+<td>公共的</td>
+</tr>
+<tr>
+<td>default </td>
+<td>默认</td>
+</tr>
+<tr>
+<td rowspan="13" align="center">类、方法和变量修饰符</td>
+<td>abstract</td>
+<td>声明抽象</td>
+</tr>
+<tr>
+<td>class</td>
+<td>类</td>
+</tr>
+<tr>
+<td>extends</td>
+<td>扩充,继承</td>
+</tr>
+<tr>
+<td>final</td>
+<td>最终值,不可改变的</td>
+</tr>
+<tr>
+<td>implements</td>
+<td>实现（接口）</td>
+</tr>
+<tr>
+<td>interface</td>
+<td>接口</td>
+</tr>
+<tr>
+<td>native</td>
+<td>本地，原生方法（非 Java 实现）</td>
+</tr>
+<tr>
+<td>new</td>
+<td>新,创建</td>
+</tr>
+<tr>
+<td>static</td>
+<td>静态</td>
+</tr>
+<tr>
+<td>strictfp</td>
+<td>严格,精准</td>
+</tr>
+<tr>
+<td>synchronized</td>
+<td>线程,同步</td>
+</tr>
+<tr>
+<td>transient</td>
+<td>短暂</td>
+</tr>
+<tr>
+<td>volatile</td>
+<td>易失</td>
+</tr>
+<tr>
+<td rowspan="12" align="center">程序控制语句</td>
+<td>break</td>
+<td>跳出循环</td>
+</tr>
+<tr>
+<td>case</td>
+<td>定义一个值以供 switch 选择</td>
+</tr>
+<tr>
+<td>continue</td>
+<td>继续</td>
+</tr>
+<tr>
+<td>default</td>
+<td>默认</td>
+</tr>
+<tr>
+<td>do</td>
+<td>运行</td>
+</tr>
+<tr>
+<td>else</td>
+<td>否则</td>
+</tr>
+<tr>
+<td>for</td>
+<td>循环</td>
+</tr>
+<tr>
+<td>if</td>
+<td>如果</td>
+</tr>
+<tr>
+<td>instanceof</td>
+<td>实例</td>
+</tr>
+<tr>
+<td>return</td>
+<td>返回</td>
+</tr>
+<tr>
+<td>switch</td>
+<td>根据值选择执行</td>
+</tr>
+<tr>
+<td>while</td>
+<td>循环</td>
+</tr>
+<tr>
+<td rowspan="6" align="center">错误处理</td>
+<td>assert</td>
+<td>断言表达式是否为真</td>
+</tr>
+<tr>
+<td>catch</td>
+<td>捕捉异常</td>
+</tr>
+<tr>
+<td>finally</td>
+<td>有没有异常都执行</td>
+</tr>
+<tr>
+<td>throw</td>
+<td>抛出一个异常对象</td>
+</tr>
+<tr>
+<td>throws</td>
+<td>声明一个异常可能被抛出</td>
+</tr>
+<tr>
+<td>try</td>
+<td>捕获异常</td>
+</tr>
+<tr>
+<td rowspan="2" align="center">包相关</td>
+<td>import</td>
+<td>引入</td>
+</tr>
+<tr>
+<td>package</td>
+<td>包</td>
+</tr>
+<tr>
+<td rowspan="8" align="center">基本类型</td>
+<td>boolean</td>
+<td>布尔型</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>字节型</td>
+</tr>
+<tr>
+<td>char</td>
+<td>字符型</td>
+</tr>
+<tr>
+<td>double</td>
+<td>双精度浮点</td>
+</tr>
+<tr>
+<td>float</td>
+<td>单精度浮点</td>
+</tr>
+<tr>
+<td>int</td>
+<td>整型</td>
+</tr>
+<tr>
+<td>long</td>
+<td>长整型</td>
+</tr>
+<tr>
+<td>short</td>
+<td>短整型</td>
+</tr>
+<tr>
+<td rowspan="3" align="center">变量引用</td>
+<td>super</td>
+<td>父类,超类</td>
+</tr>
+<tr>
+<td>this</td>
+<td>本类</td>
+</tr>
+<tr>
+<td>void</td>
+<td>无返回值</td>
+</tr>
+<tr>
+<td rowspan="3" align="center">保留关键字</td>
+<td>goto</td>
+<td>是关键字，但不能使用</td>
+</tr>
+<tr>
+<td>const</td>
+<td>是关键字，但不能使用</td>
+</tr>
+<tr>
+<td>null</td>
+<td>空</td>
+</tr>
+</tbody></table>
+### Java基本数据类型
+
+<h4 id="整数类-byte-short-int和long"><a href="#整数类-byte-short-int和long" class="headerlink" title="整数类-byte,short,int和long"></a>整数类-byte,short,int和long</h4><p>这四种都可表示有符号的整数，区别在于二进制位数不同，也就是范围不一样。</p>
+<ul>
+<li><p>byte 数据类型是8位、有符号的，以二进制补码表示的整数；</p>
+<p>最小值是 <strong>-128（-2^7）</strong>；</p>
+<p>最大值是 <strong>127（2^7-1）</strong>；</p>
+</li>
+<li><p>short 数据类型是 16 位、有符号的以二进制补码表示的整数</p>
+<p>最小值是 <strong>-32768（-2^15）</strong>；</p>
+<p>最大值是 <strong>32767（2^15 - 1）</strong>；</p>
+</li>
+<li><p>int 数据类型是32位、有符号的以二进制补码表示的整数；</p>
+<p>最小值是 <strong>-2,147,483,648（-2^31）</strong>；</p>
+<p>最大值是 <strong>2,147,483,647（2^31 - 1）</strong>；</p>
+</li>
+<li><p>long 数据类型是 64 位、有符号的以二进制补码表示的整数；</p>
+<p>最小值是 <strong>-9,223,372,036,854,775,808（-2^63）</strong>；</p>
+<p>最大值是 <strong>9,223,372,036,854,775,807（2^63 -1）</strong>；</p>
+</li>
+</ul>
+<h4 id="小数类-double-float"><a href="#小数类-double-float" class="headerlink" title="小数类-double,float"></a>小数类-double,float</h4><ul>
+<li><p>double 数据类型是双精度、64 位、符合IEEE 754标准的浮点数；</p>
+<p>浮点数的默认类型为double类型；</p>
+</li>
+<li><p>float 数据类型是单精度、32位、符合IEEE 754标准的浮点数；</p>
+<p><strong>直接使用float浮点数时，要在数字后加上f(不区分大小写)</strong></p>
+<p>float 在储存大型浮点数组的时候可节省内存空间；</p>
+</li>
+</ul>
+<h4 id="字符型-char"><a href="#字符型-char" class="headerlink" title="字符型-char"></a>字符型-char</h4><ul>
+<li><p>char类型是一个单一的 16 位 Unicode 字符；</p>
+<p>最小值是 <strong>\u0000</strong>（即为 0）；</p>
+<p>最大值是 <strong>\uffff</strong>（即为 65535）；</p>
+</li>
+</ul>
+<p>可以直接对char赋值一个整数，该整数代表字符对应的ASCII码。</p>
+<p>对于特殊字符，要用转义字符代替：</p>
+<table>
+<thead>
+<tr>
+<th>字符转义序列</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>‘\n’</td>
+<td>换行</td>
+</tr>
+<tr>
+<td>‘\r’</td>
+<td>回车</td>
+</tr>
+<tr>
+<td>‘\f’</td>
+<td>表单Feed</td>
+</tr>
+<tr>
+<td>‘\b’</td>
+<td>退格</td>
+</tr>
+<tr>
+<td>‘\t’</td>
+<td>标签</td>
+</tr>
+<tr>
+<td>‘\‘</td>
+<td>反斜杠</td>
+</tr>
+<tr>
+<td>‘&quot;‘</td>
+<td>双引号</td>
+</tr>
+<tr>
+<td>‘&#39;‘</td>
+<td>单引号</td>
+</tr>
+</tbody></table>
+<h4 id="布尔型-boolean"><a href="#布尔型-boolean" class="headerlink" title="布尔型-boolean"></a>布尔型-boolean</h4><ul>
+<li><p>boolean数据类型表示一位的信息；</p>
+<p>只有两个取值：true(真)和false(假)；</p>
+<p>默认值是 <strong>false</strong></p>
+</li>
+</ul>
+<h3 id="Java类型转换问题"><a href="#Java类型转换问题" class="headerlink" title="Java类型转换问题"></a>Java类型转换问题</h3><p>在Java中进行强制类型转换可能会出现数据溢出、精度缺失等问题。</p>
+<p>比如下面的代码，输出结果为<code>-49</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> dou = <span class="number">1999</span>;</span><br><span class="line">System.out.println((<span class="keyword">byte</span>) dou);</span><br></pre></td></tr></table></figure>
+
+<p>这是因为int是以32位二进制储存数据的，而byte是8位，所以在进行强制类型转换时，前面的24位二进制数据就会被舍弃。</p>
+</div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://q1.qlogo.cn/g?b=qq&amp;nk=2635278791&amp;s=640" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Revincx</div><div class="author-info__description">犹豫就会败北，果断就会白给</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Revincx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Revincx" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:revincx@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Heroku/" style="font-size: 1.1em; color: #999">Heroku</a> <a href="/tags/Hexo/" style="font-size: 1.3em; color: #99a1ac">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 1.3em; color: #99a1ac">JavaScript</a> <a href="/tags/Nginx/" style="font-size: 1.1em; color: #999">Nginx</a> <a href="/tags/Node-js/" style="font-size: 1.2em; color: #999da3">Node.js</a> <a href="/tags/Python/" style="font-size: 1.1em; color: #999">Python</a> <a href="/tags/Vue-js/" style="font-size: 1.1em; color: #999">Vue.js</a> <a href="/tags/%E4%BA%91%E5%82%A8%E5%AD%98/" style="font-size: 1.1em; color: #999">云储存</a> <a href="/tags/%E5%AE%89%E5%8D%93/" style="font-size: 1.1em; color: #999">安卓</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.2em; color: #999da3">教程</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 1.2em; color: #999da3">服务器</a> <a href="/tags/%E6%A0%A1%E5%9B%AD%E7%BD%91/" style="font-size: 1.1em; color: #999">校园网</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 1.1em; color: #999">笔记</a> <a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 1.5em; color: #99a9bf">编程</a> <a href="/tags/%E7%BD%91%E7%AB%99/" style="font-size: 1.1em; color: #999">网站</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 1.1em; color: #999">网络安全</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E8%AE%BE%E8%AE%A1/" style="font-size: 1.4em; color: #99a5b6">网页设计</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/03/"><span class="card-archive-list-date">三月 2021</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/02/"><span class="card-archive-list-date">二月 2021</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/01/"><span class="card-archive-list-date">一月 2021</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/12/"><span class="card-archive-list-date">十二月 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/11/"><span class="card-archive-list-date">十一月 2020</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/09/"><span class="card-archive-list-date">九月 2020</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">16</div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">17.2k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2021-03-16T13:19:38.175Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Revincx</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a><span class="footer-separator">|</span><span>加速 </span><a target="_blank" rel="noopener" href="https://www.jsdelivr.com/">jsDelivr</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'neutral',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'revincx-web-5g1gx47o69d8f025',
+      region: ''
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'revincx-web-5g1gx47o69d8f025',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script defer src="/js/inject.js"></script><script async src="/live2d-widget/autoload.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
